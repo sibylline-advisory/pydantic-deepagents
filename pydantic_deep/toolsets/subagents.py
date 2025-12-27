@@ -128,20 +128,27 @@ def create_subagent_toolset(
 
             model = config.get("model", default_model)
             tools = config.get("tools", [])
+            custom_toolsets = config.get("toolsets", [])
 
-            # Create toolsets for the subagent
-            fs_toolset = create_filesystem_toolset(
-                include_execute=True,
-                require_write_approval=False,
-                require_execute_approval=False,
-            )
-            todo_toolset = create_todo_toolset()
+            # Create default toolsets for the subagent if not provided
+            if custom_toolsets:
+                # Use custom toolsets provided in config
+                all_toolsets = list(custom_toolsets)
+            else:
+                # Create default toolsets
+                fs_toolset = create_filesystem_toolset(
+                    include_execute=True,
+                    require_write_approval=False,
+                    require_execute_approval=False,
+                )
+                todo_toolset = create_todo_toolset()
+                all_toolsets = [fs_toolset, todo_toolset]
 
             subagent = Agent(
                 model,
                 instructions=config["instructions"],
                 deps_type=type(ctx.deps),
-                toolsets=[fs_toolset, todo_toolset],
+                toolsets=all_toolsets,
             )
 
             # Add custom tools if any
