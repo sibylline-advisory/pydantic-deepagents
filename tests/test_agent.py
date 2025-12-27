@@ -64,6 +64,47 @@ class TestCreateDeepAgent:
         agent = create_deep_agent(model=TEST_MODEL, subagents=subagents)
         assert agent is not None
 
+    def test_create_with_subagent_configs_with_model_types(self):
+        """Test creating subagent configs with different model types."""
+        # Test with string model
+        subagent_str = SubAgentConfig(
+            name="researcher",
+            description="A research agent",
+            instructions="You research topics",
+            model="openai:gpt-4.1",
+        )
+        agent = create_deep_agent(model=TEST_MODEL, subagents=[subagent_str])
+        assert agent is not None
+
+        # Test with Model instance
+        subagent_model = SubAgentConfig(
+            name="coder",
+            description="A coding agent",
+            instructions="You write code",
+            model=TEST_MODEL,
+        )
+        agent = create_deep_agent(model=TEST_MODEL, subagents=[subagent_model])
+        assert agent is not None
+
+        # Test with None (should use default)
+        subagent_none = SubAgentConfig(
+            name="tester",
+            description="A testing agent",
+            instructions="You test code",
+            model=None,
+        )
+        agent = create_deep_agent(model=TEST_MODEL, subagents=[subagent_none])
+        assert agent is not None
+
+        # Test without model field (should use default)
+        subagent_no_model = SubAgentConfig(
+            name="reviewer",
+            description="A review agent",
+            instructions="You review code",
+        )
+        agent = create_deep_agent(model=TEST_MODEL, subagents=[subagent_no_model])
+        assert agent is not None
+
     def test_create_with_interrupt_on(self):
         """Test creating an agent with interrupt_on config."""
         agent = create_deep_agent(

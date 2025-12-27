@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Literal, TypedDict, TypeVar
 
 from pydantic import BaseModel
+from pydantic_ai.models import KnownModelName, Model
 from pydantic_ai.output import OutputSpec
 from pydantic_ai_todo import Todo as Todo
 from typing_extensions import NotRequired
@@ -76,7 +77,7 @@ class SubAgentConfig(TypedDict):
     description: str
     instructions: str
     tools: NotRequired[list[object]]
-    model: NotRequired[str]
+    model: NotRequired[Model | KnownModelName | str | None]
 
 
 class CompiledSubAgent(TypedDict):
