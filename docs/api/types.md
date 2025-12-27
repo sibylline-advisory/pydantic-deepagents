@@ -114,6 +114,7 @@ class SubAgentConfig(TypedDict):
     description: str               # When to use this subagent
     instructions: str              # System prompt for subagent
     tools: NotRequired[list]       # Additional tools
+    toolsets: NotRequired[list]    # Toolsets (AbstractToolset instances)
     model: NotRequired[str]        # Custom model (overrides default)
 ```
 

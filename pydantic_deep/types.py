@@ -77,6 +77,7 @@ class SubAgentConfig(TypedDict):
     description: str
     instructions: str
     tools: NotRequired[list[object]]
+    toolsets: NotRequired[list[object]]  # List of AbstractToolset instances
     model: NotRequired[Model | KnownModelName | str | None]
 
 
