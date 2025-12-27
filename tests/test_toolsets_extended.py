@@ -210,7 +210,7 @@ class TestSubagentToolsetExtended:
         ctx = MockContext(deps)
 
         # Call the task tool to create the subagent (this will cache it)
-        result = await task_tool.function(ctx, "test message", "special-agent")  # type: ignore[arg-type]
+        await task_tool.function(ctx, "test message", "special-agent")  # type: ignore[arg-type]
 
         # The subagent should be cached now
         assert "special-agent" in deps.subagents
